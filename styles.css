@@ -395,6 +395,7 @@ body, html {
     opacity: .5;
 }
 #closecard {
+    top: 69px;
     position: absolute;
     margin-left: 340px;
     background-color: #FFF;
