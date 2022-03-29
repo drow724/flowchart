@@ -61,6 +61,29 @@ document.addEventListener("DOMContentLoaded", function(){
 document.getElementById("removeblock").addEventListener("click", function(){
  flowy.deleteBlocks();
 });
+
+var closeCard = document.getElementById("closecard");
+
+closeCard.onclick = close;
+
+function close() {
+    var leftCard = document.getElementById("leftcard");
+    leftCard.style.display = "none";
+    var openCard = document.getElementById("opencard");
+    openCard.style.display = "block";
+}
+
+var openCard = document.getElementById("opencard");
+
+openCard.onclick = open;
+
+function open() {
+    var leftCard = document.getElementById("leftcard");
+    leftCard.style.display = "block";
+    var openCard = document.getElementById("opencard");
+    openCard.style.display = "none";
+}
+
 var aclick = false;
 var noinfo = false;
 var beginTouch = function (event) {
