@@ -47,68 +47,103 @@ document.addEventListener("DOMContentLoaded", function(){
         }
     }
     addEventListenerMulti("click", disabledClick, false, ".side");
-    document.getElementById("close").addEventListener("click", function(){
-       if (rightcard) {
-           rightcard = false;
-           document.getElementById("properties").classList.remove("expanded");
-           setTimeout(function(){
-                document.getElementById("propwrap").classList.remove("itson"); 
-           }, 300);
-            tempblock.classList.remove("selectedblock");
-       } 
-    });
+
     
-document.getElementById("removeblock").addEventListener("click", function(){
- flowy.deleteBlocks();
-});
+    document.getElementById("removeblock").addEventListener("click", function(){
+        flowy.deleteBlocks();
+    });
 
-var closeCard = document.getElementById("closecard");
+    var closeCard = document.getElementById("closecard");
 
-closeCard.onclick = close;
+    closeCard.onclick = close;
 
-function close() {
-    var leftCard = document.getElementById("leftcard");
-    leftCard.style.display = "none";
-    var openCard = document.getElementById("opencard");
-    openCard.style.display = "block";
-}
-
-var openCard = document.getElementById("opencard");
-
-openCard.onclick = open;
-
-function open() {
-    var leftCard = document.getElementById("leftcard");
-    leftCard.style.display = "block";
-    var openCard = document.getElementById("opencard");
-    openCard.style.display = "none";
-}
-
-var aclick = false;
-var noinfo = false;
-var beginTouch = function (event) {
-    aclick = true;
-    noinfo = false;
-    if (event.target.closest(".create-flowy")) {
-        noinfo = true;
+    function close() {
+        var leftCard = document.getElementById("leftcard");
+        leftCard.style.display = "none";
+        var openCard = document.getElementById("opencard");
+        openCard.style.display = "block";
     }
-}
-var checkTouch = function (event) {
-    aclick = false;
-}
-var doneTouch = function (event) {
-    if (event.type === "mouseup" && aclick && !noinfo) {
-      if (!rightcard && event.target.closest(".block") && !event.target.closest(".block").classList.contains("dragging")) {
-            tempblock = event.target.closest(".block");
-            rightcard = true;
-            document.getElementById("properties").classList.add("expanded");
-            document.getElementById("propwrap").classList.add("itson");
-            tempblock.classList.add("selectedblock");
-       } 
+
+    var openCard = document.getElementById("opencard");
+
+    openCard.onclick = open;
+
+    function open() {
+        var leftCard = document.getElementById("leftcard");
+        leftCard.style.display = "block";
+        var openCard = document.getElementById("opencard");
+        openCard.style.display = "none";
     }
-}
-addEventListener("mousedown", beginTouch, false);
-addEventListener("mousemove", checkTouch, false);
-addEventListener("mouseup", doneTouch, false);
-addEventListenerMulti("touchstart", beginTouch, false, ".block");
+
+    var aclick = false;
+    var noinfo = false;
+    var beginTouch = function (event) {
+        aclick = true;
+        noinfo = false;
+        if (event.target.closest(".create-flowy")) {
+            noinfo = true;
+        }
+    }
+    var checkTouch = function (event) {
+        aclick = false;
+    }
+
+    //메시지 속성 변경 팝업(좌측 팝업)
+    var doneTouch = function (event) {
+        if (event.type === "mouseup" && aclick && !noinfo) {
+        if (!rightcard && event.target.closest(".blockyright") && !event.target.closest(".blockyright").classList.contains("dragging")) {
+                tempblock = event.target.closest(".blockyright");
+                rightcard = true;
+                document.getElementById("properties").classList.add("expanded");
+                document.getElementById("propwrap").classList.add("itson");
+                tempblock.classList.add("selectedblock");
+        } 
+        }
+    }
+    addEventListener("mousedown", beginTouch, false);
+    addEventListener("mousemove", checkTouch, false);
+    addEventListener("mouseup", doneTouch, false);
+    addEventListenerMulti("touchstart", beginTouch, false, ".blockyright");
+
+    //메시지 속성 변경 팝업 닫기
+    document.getElementById("close").addEventListener("click", function(){
+        if (rightcard) {
+            rightcard = false;
+            document.getElementById("properties").classList.remove("expanded");
+            setTimeout(function(){
+                 document.getElementById("propwrap").classList.remove("itson"); 
+            }, 300);
+             tempblock.classList.remove("selectedblock");
+        } 
+     });
+
+    //메시지 내용 변경 팝업
+    var doneTouch = function (event) {
+        if (event.type === "mouseup" && aclick && !noinfo) {
+        if (!rightcard && event.target.closest(".blockyinfo") && !event.target.closest(".blockyinfo").classList.contains("dragging")) {
+                tempblock = event.target.closest(".blockyinfo");
+                rightcard = true;
+                document.getElementById("content").classList.add("expanded");
+                document.getElementById("propwrap2").classList.add("itson");
+                tempblock.classList.add("selectedblock");
+        } 
+        }
+    }
+    addEventListener("mousedown", beginTouch, false);
+    addEventListener("mousemove", checkTouch, false);
+    addEventListener("mouseup", doneTouch, false);
+    addEventListenerMulti("touchstart", beginTouch, false, ".blockyinfo");
+
+    //메시지 내용 변경 팝업 닫기
+    document.getElementById("exit").addEventListener("click", function(){
+        if (rightcard) {
+            rightcard = false;
+            document.getElementById("content").classList.remove("expanded");
+            setTimeout(function(){
+                 document.getElementById("propwrap2").classList.remove("itson"); 
+            }, 300);
+             tempblock.classList.remove("selectedblock");
+        } 
+     });
+
 });
